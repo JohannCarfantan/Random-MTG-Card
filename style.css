@@ -1,4 +1,10 @@
 #imageDiv{
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+
+#rarityChoice, #imageDiv, #setRandomButton{
+    margin-top: 20px;
 }
