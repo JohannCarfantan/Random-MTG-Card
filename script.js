@@ -1,5 +1,5 @@
 const cardPreview = document.getElementById('cardPreview')
-const sets_url = { mkm: 'https://www.magic-ville.com/pics/big/mkmFR/' }
+const sets_url = { mkm: 'https://www.magic-ville.com/pics/big/mkmFR/', lci: '#' }
 
 let set = []
 let setUrl = ''
@@ -45,9 +45,10 @@ async function loadSetIfNeeded(name) {
     })
 }
 
-async function loadSetAndStartToDisplay(name = 'mkm'){
-    set = await loadSetIfNeeded(name)
-    setUrl = sets_url[name]
+async function loadSetAndStartToDisplay(){
+    const setName = document.getElementById("setSelect").value
+    set = await loadSetIfNeeded(setName)
+    setUrl = sets_url[setName]
     filterSet()
     displayRandomCard()
 }
