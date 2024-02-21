@@ -7,11 +7,11 @@ let setFiltered = []
 
 function displayRandomCard() {
     const randomNumber = Math.floor(Math.random() * setFiltered.length)
-    const cardIdFormatted = setFiltered[randomNumber].toString().padStart(3, '0')
-    cardPreview.src = setUrl + cardIdFormatted + '.jpg'
+    const cardCollectorIdFormatted = setFiltered[randomNumber].toString().padStart(3, '0')
+    cardPreview.src = setUrl + cardCollectorIdFormatted + '.jpg'
 }
 
-function rarityChanged() {
+function filterSet() {
     const rarities = []
     document.querySelectorAll('input[name=rarity]:checked').forEach(checkbox => {
         rarities.push(checkbox.value)
@@ -48,7 +48,7 @@ async function loadSetIfNeeded(name) {
 async function loadSetAndStartToDisplay(name = 'mkm'){
     set = await loadSetIfNeeded(name)
     setUrl = sets_url[name]
-    rarityChanged()
+    filterSet()
     displayRandomCard()
 }
 loadSetAndStartToDisplay()
