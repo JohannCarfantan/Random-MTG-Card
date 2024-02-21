@@ -3,10 +3,14 @@
 # MTGCards
 
 Next steps:
-- optimiser au fond les paramètres des fonctions
-- reduire actions inutiles
-- clicks sur checkbox update le filtre de rareté
+- Optimiser au fond les paramètres des fonctions
+- Reduire actions inutiles
+- Gérer les raretés sélectionnées au clic sur checkbox
 - POO?
-- tableau: setName/url
-- credits à scryfall / Magic-ville
-- cache set data
+- Tableau: setName/url
+- Credits à scryfall / Magic-ville
+- Cache set data
+- Afficher les cartes vues/non vues
+- Mode random/random en enlevant les cartes vues
+- Bouton reset des cartes vues
+- Selecteur de set
