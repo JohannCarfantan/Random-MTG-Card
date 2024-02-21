@@ -4,6 +4,7 @@
 
 Next steps:
 - Optimiser au fond les paramètres des fonctions
+- Load smaller/bigger image if normal size returns 404
 - Reduire actions inutiles
 - Gérer les raretés sélectionnées au clic sur checkbox
 - POO?
