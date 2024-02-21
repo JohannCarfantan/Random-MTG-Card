@@ -13,12 +13,12 @@
         <h2>Meurtres au Manoir Karlov</h2>
         <img id="cardPreview" src=""/>
         <div id="rarityChoice">
-            <input type="checkbox" name="rarity" value="c">Communes
-            <input type="checkbox" name="rarity" value="u">Uncos
-            <input type="checkbox" name="rarity" value="r">Rares
-            <input type="checkbox" name="rarity" value="m">Mythiques
+            <input type="checkbox" name="rarity" value="c" onclick="rarityChanged()">Communes
+            <input type="checkbox" name="rarity" value="u" onclick="rarityChanged()">Uncos
+            <input type="checkbox" name="rarity" value="r" onclick="rarityChanged()">Rares
+            <input type="checkbox" name="rarity" value="m" onclick="rarityChanged()">Mythiques
         </div>
-        <button id="setRandomButton" onclick="displayRandomCardInSet()">Random</button>
+        <button id="setRandomButton" onclick="displayRandomCard()">Random</button>
     </div>
     <script src="script.js"></script>
 </body>

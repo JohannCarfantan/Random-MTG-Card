@@ -3,14 +3,8 @@
 # MTGCards
 
 Next steps:
-- Optimiser au fond les paramètres des fonctions
 - Load smaller/bigger image if normal size returns 404
-- Reduire actions inutiles
-- Gérer les raretés sélectionnées au clic sur checkbox
-- POO?
-- Tableau: setName/url
 - Credits à scryfall / Magic-ville
-- Cache set data
 - Afficher les cartes vues/non vues
 - Mode random/random en enlevant les cartes vues
 - Bouton reset des cartes vues

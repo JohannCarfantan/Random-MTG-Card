@@ -1,34 +1,43 @@
 const cardPreview = document.getElementById('cardPreview')
-const baseUrl = 'https://www.magic-ville.com/pics/big/mkmFR/'
+const sets_url = { mkm: 'https://www.magic-ville.com/pics/big/mkmFR/' }
+
 let set = []
+let setUrl = ''
+let setFiltered = []
 
-function displayRandomCardInSet() {
-    const cards = []
+function displayRandomCard() {
+    const randomNumber = Math.floor(Math.random() * setFiltered.length)
+    const cardIdFormatted = setFiltered[randomNumber].toString().padStart(3, '0')
+    cardPreview.src = setUrl + cardIdFormatted + '.jpg'
+}
+
+function rarityChanged() {
     const rarities = []
-
     document.querySelectorAll('input[name=rarity]:checked').forEach(checkbox => {
         rarities.push(checkbox.value)
     })
-    
-    rarities.length === 0 ?
-        cards.push(...set.c, ...set.u, ...set.r, ...set.m) :
-        rarities.forEach(rarity => cards.push(...set[rarity]))
-    
-    cardPreview.src = baseUrl + cards[Math.floor(Math.random() * cards.length)].toString().padStart(3, '0') + '.jpg'
+    setFiltered = rarities.length === 0 ?
+        [...set.c, ...set.u, ...set.r, ...set.m] :
+        rarities.reduce((acc, rarity) => acc.concat(set[rarity]), [])
 }
 
-/**
- * 
- * @param {string} name The name of the set to load
- * @returns {object} The object containing the set
- */
-async function loadSetIfNeeded(name = 'mkm') {
+async function loadSetIfNeeded(name) {
     return new Promise(resolve => {
+        // Check if already loaded
         if(typeof window[name] !== 'undefined'){
             return resolve(window[name]) 
         }
+        
+        // Check if set is in local storage
+        const setInLocalStorage = JSON.parse(localStorage.getItem(name))
+        if(setInLocalStorage !== null){
+            return resolve(setInLocalStorage)
+        }
+
+        // Load set from url
         const script = document.createElement('script')
         script.onload = function () {
+            localStorage.setItem(name, JSON.stringify(window[name]))
             resolve(window[name])
         }
         script.src = `./sets/${name}.js`
@@ -36,8 +45,10 @@ async function loadSetIfNeeded(name = 'mkm') {
     })
 }
 
-async function main(){
-    set = await loadSetIfNeeded('mkm')
-    displayRandomCardInSet()
+async function loadSetAndStartToDisplay(name = 'mkm'){
+    set = await loadSetIfNeeded(name)
+    setUrl = sets_url[name]
+    rarityChanged()
+    displayRandomCard()
 }
-main()
+loadSetAndStartToDisplay()
