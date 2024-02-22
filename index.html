@@ -10,12 +10,9 @@
 
 <body>
     <div id="imageDiv">
-        <h2>Meurtres au Manoir Karlov</h2>
+        <h2 id="setTitle"></h2>
         <img id="cardPreview" src=""/>
-        <select name="sets" id="setSelect" onchange="loadSetAndStartToDisplay()">
-            <option value="mkm" selected="selected">Meurtres au Manoir Karlov</option>
-            <!-- <option value="lci">Lost Caverns of Ixalan</option> -->
-        </select>
+        <select name="sets" id="setSelect" onchange="loadSetAndStartToDisplay()"></select>
         <div id="rarityChoice">
             <input type="checkbox" name="rarity" value="c" onclick="filterSet()">Communes
             <input type="checkbox" name="rarity" value="u" onclick="filterSet()">Uncos

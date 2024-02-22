@@ -1,5 +1,20 @@
 const cardPreview = document.getElementById('cardPreview')
-const sets_url = { mkm: 'https://www.magic-ville.com/pics/big/mkmFR/', lci: '#' }
+const setTitle = document.getElementById('setTitle')
+const setSelect = document.getElementById('setSelect')
+const sets = {
+    mkm: {
+        url: 'https://www.magic-ville.com/pics/big/mkmFR/',
+        name: 'Meurtres au Manoir Karlov'
+    },
+    lci: {
+        url: 'https://www.magic-ville.com/pics/big/lciFR/',
+        name: 'Les Cavernes Oubliées d\'Ixalan'
+    }, 
+    woe: {
+        url: 'https://www.magic-ville.com/pics/big/woeFR/',
+        name: 'Les Friches d\'Eldraine'
+    }
+}
 
 let set = []
 let setUrl = ''
@@ -45,11 +60,22 @@ async function loadSetIfNeeded(name) {
     })
 }
 
+function displaySets(){
+    for (const [setAcronym, setValues] of Object.entries(sets)) {
+        const option = document.createElement('option')
+        option.value = setAcronym
+        option.innerHTML = setValues.name
+        setSelect.appendChild(option)
+    }
+}
+
 async function loadSetAndStartToDisplay(){
-    const setName = document.getElementById("setSelect").value
-    set = await loadSetIfNeeded(setName)
-    setUrl = sets_url[setName]
+    const setAcronym = document.getElementById("setSelect").value
+    set = await loadSetIfNeeded(setAcronym)
+    setUrl = sets[setAcronym].url
+    setTitle.innerHTML = sets[setAcronym].name
     filterSet()
     displayRandomCard()
 }
+displaySets()
 loadSetAndStartToDisplay()
