@@ -3,9 +3,7 @@
 # MTGCards
 
 Next steps:
-- Export du set LCI
-- URL des images LCI depuis Magic-ville
-- Load smaller/bigger image if normal size returns 404
+- Check set à jour avec extension PIP?
+- Bulk export de tous les derniers sets
+- ? Load smaller/bigger image if normal size returns 404
 - Credits à scryfall / Magic-ville
-- Export de tous les sigles de sets
-- Bulk export de tous les sets
