@@ -1,1 +1,1 @@
-var sets = {"pip":"Fallout","mkm":"Murders at Karlov Manor","rvr":"Ravnica Remastered","lci":"The Lost Caverns of Ixalan","woe":"Wilds of Eldraine"}
+var sets = {"mkm":"Murders at Karlov Manor","rvr":"Ravnica Remastered","lci":"The Lost Caverns of Ixalan","woe":"Wilds of Eldraine","lrw":"Lorwyn"}

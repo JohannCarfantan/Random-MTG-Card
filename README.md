@@ -3,7 +3,6 @@
 # MTGCards
 
 Next steps:
-- Credits à scryfall
+- Ajouter tous les derniers sets déjà récupérés dans le .md
 - Clear script d'input
-- Re-DL les cartes de Scryfall
 - Cacher les cases de cochees et l'extension choisie
