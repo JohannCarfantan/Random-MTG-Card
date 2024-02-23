@@ -1,7 +1,1 @@
-var sets = {
-    pip: 'Fallout',
-    mkm: 'Meurtres au Manoir Karlov',
-    rvr: 'Ravnica Remastered',
-    lci: 'Les Cavernes Oubliées d\'Ixalan',
-    woe: 'Les Friches d\'Eldraine'
-}
+var sets = {"pip":"Fallout","mkm":"Murders at Karlov Manor","rvr":"Ravnica Remastered","lci":"The Lost Caverns of Ixalan","woe":"Wilds of Eldraine"}
