@@ -28,7 +28,7 @@ async function loadFileNeeded(name, isASet = false) {
         }
         
         // Check if file is in local storage
-        const setInLocalStorage = JSON.parse(localStorage.getItem(name))
+        const setInLocalStorage = JSON.parse(sessionStorage.getItem(name))
         if(setInLocalStorage !== null){
             window[name] = setInLocalStorage
             return resolve(setInLocalStorage)
@@ -37,7 +37,7 @@ async function loadFileNeeded(name, isASet = false) {
         // Load file from url
         const script = document.createElement('script')
         script.onload = function () {
-            localStorage.setItem(name, JSON.stringify(window[name]))
+            sessionStorage.setItem(name, JSON.stringify(window[name]))
             resolve(window[name])
         }
         script.src = isASet ? `./sets/${name}.js` : `./${name}.js`
