@@ -5,6 +5,10 @@
     align-items: center;
 }
 
+#cardPreview{
+    width: 350px;
+}
+
 #rarityChoice, #imageDiv, #setRandomButton, #setSelect{
     margin-top: 20px;
 }

@@ -3,7 +3,6 @@
 # MTGCards
 
 Next steps:
-- Check set à jour avec extension PIP?
-- Bulk export de tous les derniers sets
-- ? Load smaller/bigger image if normal size returns 404
-- Credits à scryfall / Magic-ville
+- Credits à scryfall
+- Clear script d'input
+- Re-DL les cartes de Scryfall
