@@ -3,6 +3,6 @@
 # MTGCards
 
 Next steps:
-- Ajouter tous les derniers sets déjà récupérés dans le .md
 - Clear script d'input
+- Gérer les sets qui commencent par un chiffre
 - Cacher les cases de cochees et l'extension choisie
