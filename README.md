@@ -3,8 +3,8 @@
 # MTGCards
 
 Next steps:
-- Clear script d'input
-- Faire un script/regex qui exporte tous les codes d'extension
-- Cacher les cases de cochees et l'extension choisie
-- Documenter le process: https://mtg.fandom.com/wiki/Set et https://scryfall.com/docs/api/bulk-data
+- Ne pas ajouter un set s'il n'a aucunes cartes ou pas de nom
 - Griser cases quand pas de cartes dans la rareté
+- Cacher les cases de cochees et l'extension choisie
+- Clear script d'input
+- Documenter le process: https://mtg.fandom.com/wiki/Set et https://scryfall.com/docs/api/bulk-data
