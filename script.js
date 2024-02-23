@@ -1,24 +1,6 @@
 const cardPreview = document.getElementById('cardPreview')
 const setTitle = document.getElementById('setTitle')
 const setSelect = document.getElementById('setSelect')
-const sets = {
-    mkm: {
-        url: 'https://www.magic-ville.com/pics/big/mkmFR/',
-        name: 'Meurtres au Manoir Karlov'
-    },
-    rvr: {
-        url: 'https://www.magic-ville.com/pics/big/rvrFR/',
-        name: 'Ravnica Remastered'
-    },
-    lci: {
-        url: 'https://www.magic-ville.com/pics/big/lciFR/',
-        name: 'Les Cavernes Oubliées d\'Ixalan'
-    }, 
-    woe: {
-        url: 'https://www.magic-ville.com/pics/big/woeFR/',
-        name: 'Les Friches d\'Eldraine'
-    }
-}
 
 let set = []
 let setUrl = ''
@@ -40,26 +22,27 @@ function filterSet() {
         rarities.reduce((acc, rarity) => acc.concat(set[rarity]), [])
 }
 
-async function loadSetIfNeeded(name) {
+async function loadFileNeeded(name, isASet = false) {
     return new Promise(resolve => {
         // Check if already loaded
         if(typeof window[name] !== 'undefined'){
             return resolve(window[name]) 
         }
         
-        // Check if set is in local storage
+        // Check if file is in local storage
         const setInLocalStorage = JSON.parse(localStorage.getItem(name))
         if(setInLocalStorage !== null){
+            window[name] = setInLocalStorage
             return resolve(setInLocalStorage)
         }
 
-        // Load set from url
+        // Load file from url
         const script = document.createElement('script')
         script.onload = function () {
             localStorage.setItem(name, JSON.stringify(window[name]))
             resolve(window[name])
         }
-        script.src = `./sets/${name}.js`
+        script.src = isASet ? `./sets/${name}.js` : `./${name}.js`
         document.body.appendChild(script)
     })
 }
@@ -75,11 +58,17 @@ function displaySets(){
 
 async function loadSetAndStartToDisplay(){
     const setAcronym = document.getElementById("setSelect").value
-    set = await loadSetIfNeeded(setAcronym)
+    set = await loadFileNeeded(setAcronym, true)
     setUrl = sets[setAcronym].url
     setTitle.innerHTML = sets[setAcronym].name
     filterSet()
     displayRandomCard()
 }
-displaySets()
-loadSetAndStartToDisplay()
+
+async function main() {
+    await loadFileNeeded('sets')
+    displaySets()
+    loadSetAndStartToDisplay()
+}
+
+main()
