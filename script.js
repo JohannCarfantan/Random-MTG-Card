@@ -56,7 +56,7 @@ function displaySets(){
 
 async function loadSetAndStartToDisplay(){
     const setAcronym = document.getElementById("setSelect").value
-    set = await loadFileNeeded(setAcronym, true)
+    set = await loadFileNeeded(`set_${setAcronym}`, true)
     setTitle.innerHTML = sets[setAcronym]
     filterSet()
     displayRandomCard()

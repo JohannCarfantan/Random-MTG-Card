@@ -4,5 +4,7 @@
 
 Next steps:
 - Clear script d'input
-- Gérer les sets qui commencent par un chiffre
+- Faire un script/regex qui exporte tous les codes d'extension
 - Cacher les cases de cochees et l'extension choisie
+- Documenter le process: https://mtg.fandom.com/wiki/Set et https://scryfall.com/docs/api/bulk-data
+- Griser cases quand pas de cartes dans la rareté
