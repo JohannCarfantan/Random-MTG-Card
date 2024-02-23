@@ -3,13 +3,11 @@ const setTitle = document.getElementById('setTitle')
 const setSelect = document.getElementById('setSelect')
 
 let set = []
-let setUrl = ''
 let setFiltered = []
 
 function displayRandomCard() {
     const randomNumber = Math.floor(Math.random() * setFiltered.length)
-    const cardCollectorIdFormatted = setFiltered[randomNumber].toString().padStart(3, '0')
-    cardPreview.src = setUrl + cardCollectorIdFormatted + '.jpg'
+    cardPreview.src = 'https://cards.scryfall.io/normal/front/' + setFiltered[randomNumber] + '.jpg'
 }
 
 function filterSet() {
@@ -48,10 +46,10 @@ async function loadFileNeeded(name, isASet = false) {
 }
 
 function displaySets(){
-    for (const [setAcronym, setValues] of Object.entries(sets)) {
+    for (const [setAcronym, setName] of Object.entries(sets)) {
         const option = document.createElement('option')
         option.value = setAcronym
-        option.innerHTML = setValues.name
+        option.innerHTML = setName
         setSelect.appendChild(option)
     }
 }
@@ -59,8 +57,7 @@ function displaySets(){
 async function loadSetAndStartToDisplay(){
     const setAcronym = document.getElementById("setSelect").value
     set = await loadFileNeeded(setAcronym, true)
-    setUrl = sets[setAcronym].url
-    setTitle.innerHTML = sets[setAcronym].name
+    setTitle.innerHTML = sets[setAcronym]
     filterSet()
     displayRandomCard()
 }
