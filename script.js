@@ -15,6 +15,7 @@ async function loadSet(){
 function disableCheckboxesIfNeeded(){
     checkboxes.forEach(checkbox => {
         checkbox.disabled = set[checkbox.value].length === 0 ? true : false
+        checkbox.checked = set[checkbox.value].length === 0 ? false : checkbox.checked
     })
 }
 
