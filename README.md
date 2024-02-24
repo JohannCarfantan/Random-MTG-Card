@@ -2,6 +2,8 @@
 
 # MTGCards
 
+Site link: https://random-mtg-card-fr.netlify.app/
+
 The site helps to randomly browse cards in a set filtered by rarity.
 It aims to help to get a touch of what's in a set to draft better.
 
