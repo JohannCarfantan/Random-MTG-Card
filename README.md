@@ -3,6 +3,5 @@
 # MTGCards
 
 Next steps:
-- Clear script.js
 - Clear input.js
 - Documenter le process: https://mtg.fandom.com/wiki/Set et https://scryfall.com/docs/api/bulk-data
