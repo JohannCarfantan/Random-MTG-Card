@@ -12,14 +12,14 @@
     <div id="imageDiv">
         <h2 id="setTitle"></h2>
         <img id="cardPreview" src=""/>
-        <select name="sets" id="setSelect" onchange="loadSetAndStartToDisplay()"></select>
+        <select name="sets" id="setSelect" onchange="loadSelectedSetAndDisplayACard()"></select>
         <div id="rarityChoice">
-            <input type="checkbox" name="rarity" value="c" onclick="filterSet()">Communes
-            <input type="checkbox" name="rarity" value="u" onclick="filterSet()">Uncos
-            <input type="checkbox" name="rarity" value="r" onclick="filterSet()">Rares
-            <input type="checkbox" name="rarity" value="m" onclick="filterSet()">Mythiques
+            <input type="checkbox" name="rarity" value="c" onclick="filterSetPerSelectedRarities()">Communes
+            <input type="checkbox" name="rarity" value="u" onclick="filterSetPerSelectedRarities()">Uncos
+            <input type="checkbox" name="rarity" value="r" onclick="filterSetPerSelectedRarities()">Rares
+            <input type="checkbox" name="rarity" value="m" onclick="filterSetPerSelectedRarities()">Mythiques
         </div>
-        <button id="setRandomButton" onclick="displayRandomCard()">Random</button>
+        <button id="setRandomButton" onclick="displayARandomCardFromFilteredSet()">Random</button>
     </div>
     <script src="script.js"></script>
 </body>

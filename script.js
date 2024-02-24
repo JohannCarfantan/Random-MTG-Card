@@ -6,32 +6,32 @@ const checkboxes = document.querySelectorAll('input[name=rarity]')
 let set = []
 let setFiltered = []
 
-function displayRandomCard() {
+function displayARandomCardFromFilteredSet() {
     const randomNumber = Math.floor(Math.random() * setFiltered.length)
     cardPreview.src = 'https://cards.scryfall.io/normal/front/' + setFiltered[randomNumber] + '.jpg'
 }
 
-function filterSet() {
+function filterSetPerSelectedRarities() {
     const rarities = []
     checkboxes.forEach(checkbox => {if(checkbox.checked) rarities.push(checkbox.value)})
     setFiltered = rarities.length === 0 ?
         [...set.c, ...set.u, ...set.r, ...set.m] :
         rarities.reduce((acc, rarity) => acc.concat(set[rarity]), [])
-        sessionStorage.setItem("selectedRarities", rarities)
+    sessionStorage.setItem("selectedRarities", rarities)
 }
 
-async function loadFileNeeded(name, isASet = false) {
+async function loadFile(name, isASet = false) {
     return new Promise(resolve => {
         // Check if already loaded
         if(typeof window[name] !== 'undefined'){
             return resolve(window[name]) 
         }
         
-        // Check if file is in local storage
-        const setInLocalStorage = JSON.parse(sessionStorage.getItem(name))
-        if(setInLocalStorage !== null){
-            window[name] = setInLocalStorage
-            return resolve(setInLocalStorage)
+        // Check if file is in session storage
+        const setInSessionStorage = JSON.parse(sessionStorage.getItem(name))
+        if(setInSessionStorage !== null){
+            window[name] = setInSessionStorage
+            return resolve(setInSessionStorage)
         }
 
         // Load file from url
@@ -45,7 +45,7 @@ async function loadFileNeeded(name, isASet = false) {
     })
 }
 
-function displaySets(){
+function displaySetsInSelect(){
     for (const [setAcronym, setName] of Object.entries(sets)) {
         const option = document.createElement('option')
         option.value = setAcronym
@@ -54,23 +54,26 @@ function displaySets(){
     }
 }
 
-function disableCheckboxIfNeeded(){
+function disableCheckboxesIfNeeded(){
     checkboxes.forEach(checkbox => {
         checkbox.disabled = set[checkbox.value].length === 0 ? true : false
     })
 }
 
-async function loadSetAndStartToDisplay(){
-    const setAcronym = setSelect.value
-    set = await loadFileNeeded(`set_${setAcronym}`, true)
-    setTitle.innerHTML = sets[setAcronym]
-    sessionStorage.setItem("selectedSetAcronym", setAcronym)
-    disableCheckboxIfNeeded()
-    filterSet()
-    displayRandomCard()
+async function loadSet(){
+    set = await loadFile(`set_${setSelect.value}`, true)
+    setTitle.innerHTML = sets[setSelect.value]
+    sessionStorage.setItem("selectedSetAcronym", setSelect.value)
 }
 
-function loadSetAndRaritiesFromSessionStorage(){
+async function loadSelectedSetAndDisplayACard(){
+    await loadSet()
+    disableCheckboxesIfNeeded()
+    filterSetPerSelectedRarities()
+    displayARandomCardFromFilteredSet()
+}
+
+function setSelectedSetAndRarities(){
     const selectedSetAcronym = sessionStorage.getItem("selectedSetAcronym")
     if(selectedSetAcronym !== null) setSelect.value = selectedSetAcronym
 
@@ -84,10 +87,10 @@ function loadSetAndRaritiesFromSessionStorage(){
 }
 
 async function main() {
-    await loadFileNeeded('sets')
-    displaySets()
-    loadSetAndRaritiesFromSessionStorage()
-    loadSetAndStartToDisplay()
+    await loadFile('sets')
+    displaySetsInSelect()
+    setSelectedSetAndRarities()
+    loadSelectedSetAndDisplayACard()
 }
 
 main()
