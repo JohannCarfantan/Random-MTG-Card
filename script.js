@@ -1,6 +1,7 @@
 const cardPreview = document.getElementById('cardPreview')
 const setTitle = document.getElementById('setTitle')
 const setSelect = document.getElementById('setSelect')
+const checkboxes = document.querySelectorAll('input[name=rarity]')
 
 let set = []
 let setFiltered = []
@@ -12,12 +13,11 @@ function displayRandomCard() {
 
 function filterSet() {
     const rarities = []
-    document.querySelectorAll('input[name=rarity]:checked').forEach(checkbox => {
-        rarities.push(checkbox.value)
-    })
+    checkboxes.forEach(checkbox => {if(checkbox.checked) rarities.push(checkbox.value)})
     setFiltered = rarities.length === 0 ?
         [...set.c, ...set.u, ...set.r, ...set.m] :
         rarities.reduce((acc, rarity) => acc.concat(set[rarity]), [])
+        sessionStorage.setItem("selectedRarities", rarities)
 }
 
 async function loadFileNeeded(name, isASet = false) {
@@ -38,7 +38,7 @@ async function loadFileNeeded(name, isASet = false) {
         const script = document.createElement('script')
         script.onload = function () {
             sessionStorage.setItem(name, JSON.stringify(window[name]))
-            resolve(window[name])
+            return resolve(window[name])
         }
         script.src = isASet ? `./sets/${name}.js` : `./${name}.js`
         document.body.appendChild(script)
@@ -54,17 +54,39 @@ function displaySets(){
     }
 }
 
+function disableCheckboxIfNeeded(){
+    checkboxes.forEach(checkbox => {
+        checkbox.disabled = set[checkbox.value].length === 0 ? true : false
+    })
+}
+
 async function loadSetAndStartToDisplay(){
-    const setAcronym = document.getElementById("setSelect").value
+    const setAcronym = setSelect.value
     set = await loadFileNeeded(`set_${setAcronym}`, true)
     setTitle.innerHTML = sets[setAcronym]
+    sessionStorage.setItem("selectedSetAcronym", setAcronym)
+    disableCheckboxIfNeeded()
     filterSet()
     displayRandomCard()
+}
+
+function loadSetAndRaritiesFromSessionStorage(){
+    const selectedSetAcronym = sessionStorage.getItem("selectedSetAcronym")
+    if(selectedSetAcronym !== null) setSelect.value = selectedSetAcronym
+
+    const selectedRarities = sessionStorage.getItem("selectedRarities")
+    if(selectedRarities !== null){
+        const raritiesArray = selectedRarities.split(',').filter(rarity => rarity !== '')
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = raritiesArray.includes(checkbox.value) ? true : false
+        })
+    }
 }
 
 async function main() {
     await loadFileNeeded('sets')
     displaySets()
+    loadSetAndRaritiesFromSessionStorage()
     loadSetAndStartToDisplay()
 }
 

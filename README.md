@@ -3,8 +3,6 @@
 # MTGCards
 
 Next steps:
-- Ne pas ajouter un set s'il n'a aucunes cartes ou pas de nom
-- Griser cases quand pas de cartes dans la rareté
-- Mettre en cache les cases de cochées et l'extension choisie
-- Clear script d'input
+- Clear script.js
+- Clear input.js
 - Documenter le process: https://mtg.fandom.com/wiki/Set et https://scryfall.com/docs/api/bulk-data
