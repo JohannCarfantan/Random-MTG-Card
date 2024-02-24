@@ -6,9 +6,16 @@ const checkboxes = document.querySelectorAll('input[name=rarity]')
 let set = []
 let setFiltered = []
 
-function displayARandomCardFromFilteredSet() {
-    const randomNumber = Math.floor(Math.random() * setFiltered.length)
-    cardPreview.src = 'https://cards.scryfall.io/normal/front/' + setFiltered[randomNumber] + '.jpg'
+async function loadSet(){
+    set = await loadFile(`set_${setSelect.value}`, true)
+    setTitle.innerHTML = sets[setSelect.value]
+    sessionStorage.setItem("selectedSetAcronym", setSelect.value)
+}
+
+function disableCheckboxesIfNeeded(){
+    checkboxes.forEach(checkbox => {
+        checkbox.disabled = set[checkbox.value].length === 0 ? true : false
+    })
 }
 
 function filterSetPerSelectedRarities() {
@@ -18,6 +25,11 @@ function filterSetPerSelectedRarities() {
         [...set.c, ...set.u, ...set.r, ...set.m] :
         rarities.reduce((acc, rarity) => acc.concat(set[rarity]), [])
     sessionStorage.setItem("selectedRarities", rarities)
+}
+
+function displayARandomCardFromFilteredSet() {
+    const randomNumber = Math.floor(Math.random() * setFiltered.length)
+    cardPreview.src = 'https://cards.scryfall.io/normal/front/' + setFiltered[randomNumber] + '.jpg'
 }
 
 async function loadFile(name, isASet = false) {
@@ -54,25 +66,6 @@ function displaySetsInSelect(){
     }
 }
 
-function disableCheckboxesIfNeeded(){
-    checkboxes.forEach(checkbox => {
-        checkbox.disabled = set[checkbox.value].length === 0 ? true : false
-    })
-}
-
-async function loadSet(){
-    set = await loadFile(`set_${setSelect.value}`, true)
-    setTitle.innerHTML = sets[setSelect.value]
-    sessionStorage.setItem("selectedSetAcronym", setSelect.value)
-}
-
-async function loadSelectedSetAndDisplayACard(){
-    await loadSet()
-    disableCheckboxesIfNeeded()
-    filterSetPerSelectedRarities()
-    displayARandomCardFromFilteredSet()
-}
-
 function setSelectedSetAndRarities(){
     const selectedSetAcronym = sessionStorage.getItem("selectedSetAcronym")
     if(selectedSetAcronym !== null) setSelect.value = selectedSetAcronym
@@ -84,6 +77,13 @@ function setSelectedSetAndRarities(){
             checkbox.checked = raritiesArray.includes(checkbox.value) ? true : false
         })
     }
+}
+
+async function loadSelectedSetAndDisplayACard(){
+    await loadSet()
+    disableCheckboxesIfNeeded()
+    filterSetPerSelectedRarities()
+    displayARandomCardFromFilteredSet()
 }
 
 async function main() {
