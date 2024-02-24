@@ -2,10 +2,12 @@
 
 # MTGCards
 
-Next steps:
-- Clear script `inputs/filterAllCards.js` and remove it from `.gitignore`
+The site helps to randomly browse cards in a set filtered by rarity.
+It aims to help to get a touch of what's in a set to draft better.
 
-# Update cards
+Each known card variant are presents in the pool. Cards are displayes in French, or in English by default. However, some cards are only present in one language so they are displayed in this language (Phyrexian, Chinese, German, etc...).
+
+# How to update cards
 
 1. Visit this [Wiki](https://mtg.fandom.com/wiki/Set#List_of_Magic_expansions_and_sets)
 2. Order by "Released" DESC
