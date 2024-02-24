@@ -20,12 +20,11 @@ function disableCheckboxesIfNeeded(){
 }
 
 function filterSetPerSelectedRarities() {
-    const rarities = []
-    checkboxes.forEach(checkbox => {if(checkbox.checked) rarities.push(checkbox.value)})
+    const rarities = [...checkboxes].map(checkbox => checkbox.checked ? checkbox.value : null).filter(rarity => rarity)
+    sessionStorage.setItem("selectedRarities", rarities)
     setFiltered = rarities.length === 0 ?
         [...set.c, ...set.u, ...set.r, ...set.m] :
         rarities.reduce((acc, rarity) => acc.concat(set[rarity]), [])
-    sessionStorage.setItem("selectedRarities", rarities)
 }
 
 function displayARandomCardFromFilteredSet() {
@@ -67,7 +66,7 @@ function displaySetsInSelect(){
     }
 }
 
-function setSelectedSetAndRarities(){
+function setSelectedSetAndRaritiesFromSessionStorage(){
     const selectedSetAcronym = sessionStorage.getItem("selectedSetAcronym")
     if(selectedSetAcronym !== null) setSelect.value = selectedSetAcronym
 
@@ -90,7 +89,7 @@ async function loadSelectedSetAndDisplayACard(){
 async function main() {
     await loadFile('sets')
     displaySetsInSelect()
-    setSelectedSetAndRarities()
+    setSelectedSetAndRaritiesFromSessionStorage()
     loadSelectedSetAndDisplayACard()
 }
 
