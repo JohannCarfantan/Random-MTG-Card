@@ -1,14 +1,22 @@
-#imageDiv{
+#imageDiv {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#cardPreview{
+#cardPreview {
     width: 350px;
 }
 
-#rarityChoice, #imageDiv, #setRandomButton, #setSelect{
+#rarityChoice, #imageDiv, #setRandomButton, #setSelect {
     margin-top: 20px;
+}
+
+#setTitle {
+    margin-bottom: 0px;
+}
+
+#setCardsNumber {
+    margin-top: 0px;
 }

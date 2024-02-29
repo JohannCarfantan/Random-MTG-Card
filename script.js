@@ -1,5 +1,6 @@
 const cardPreview = document.getElementById('cardPreview')
 const setTitle = document.getElementById('setTitle')
+const setCardsNumber = document.getElementById('setCardsNumber')
 const setSelect = document.getElementById('setSelect')
 const checkboxes = document.querySelectorAll('input[name=rarity]')
 
@@ -9,6 +10,7 @@ let setFiltered = []
 async function loadSet(){
     set = await loadFile(`set_${setSelect.value}`, true)
     setTitle.innerHTML = sets[setSelect.value]
+    setCardsNumber.innerHTML = set.c.length + set.u.length + set.r.length + set.m.length + " cartes"
     sessionStorage.setItem("selectedSetAcronym", setSelect.value)
 }
 
