@@ -27,3 +27,20 @@ Each known card variant are presents in the pool. Cards are displayed in French,
 9. Run `cd inputs` and then `node filterAllCards.js`
 10. Commit changes and push
 11. You're done!
+
+# TO DO LIST
+
+Move the site code into a dedicated folder
+Only deploy on Netlify if the site code has changed
+
+Create a Firebase function that does the following:
+- Fetch all sets: https://api.scryfall.com/sets
+- Sort sets by date and keep the last 10 ones
+- For each set:
+  - Fetch all cards: https://api.scryfall.com/cards/search?q=e%3A{set_code}
+  - Create a file on Firebase Storage with the cards data
+- Create a file on Firebase Storage with the sets data
+
+Make the site code fetch the sets and cards data from Firebase Storage
+Do some cleaning: remove card data files from the site code
+Update the README.md file with the new steps
