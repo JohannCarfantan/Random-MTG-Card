@@ -9,6 +9,16 @@ It aims to help to get a touch of what's in a set to draft better.
 
 Each known card variant are presents in the pool. Cards are displayed in French, or in English by default. However, some cards are only present in one language so they are displayed in this language (Phyrexian, Chinese, German, etc...).
 
+# Setup
+
+install nvm
+nvm install
+nvm use
+cd functions; npm install
+cd ..
+firebase emulators:start
+firebase deploy --only functions
+
 # How to update cards
 
 1. Visit this [Wiki](https://mtg.fandom.com/wiki/Set#List_of_Magic_expansions_and_sets)
