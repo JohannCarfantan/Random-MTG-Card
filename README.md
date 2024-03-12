@@ -30,8 +30,6 @@ Each known card variant are presents in the pool. Cards are displayed in French,
 
 # TO DO LIST
 
-Only deploy on Netlify if the site code has changed
-
 Create a Firebase function that does the following:
 - Fetch all sets: https://api.scryfall.com/sets
 - Sort sets by date and keep the last 10 ones
