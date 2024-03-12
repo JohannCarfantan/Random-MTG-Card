@@ -30,7 +30,6 @@ Each known card variant are presents in the pool. Cards are displayed in French,
 
 # TO DO LIST
 
-Move the site code into a dedicated folder
 Only deploy on Netlify if the site code has changed
 
 Create a Firebase function that does the following:
