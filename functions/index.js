@@ -14,11 +14,11 @@ exports.updateMTGSetsAndCards = onRequest(async (request, response) => {
     const sets = await getSets()
     logger.log(`There are ${sets.data.length} sets from Scryfall`)
 
-    sets.data.forEach(async set => {
+    for (const set of sets.data) {
         if(set.code === 'mkm'){
             await processSet(set) // await needed here? 
         }
-    })
+    }
 
     logger.log(`Function end`)
     response.send('ok')
