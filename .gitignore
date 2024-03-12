@@ -1,1 +1,3 @@
 inputs/all-cards.json
+firebase-debug.log*
+firebase-debug.*.log*
