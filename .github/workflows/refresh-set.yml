@@ -1,4 +1,4 @@
-name: Fetch sets
+name: Refresh set
 on: 
   workflow_dispatch:
     inputs: 
