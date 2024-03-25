@@ -1,0 +1,23 @@
+const { exec } = require('child_process')
+const apiUrl = "https://api.scryfall.com"
+
+async function main() {
+    const sets = await getSets()
+    console.log(`There are ${sets.data.length} sets from Scryfall`)
+
+    for (const set of sets.data) {
+        console.log(`Refreshing set ${set.code}`)
+        const { stdout, stderr } = await exec(`node scripts/refresh-set-cards.js ${set.code}`)
+        await wait(200)
+    }
+}
+
+async function wait (ms){
+    return new Promise(resolve => setTimeout(resolve, ms))
+} 
+
+async function getSets() {
+    return await ( await fetch(`${apiUrl}/sets`)).json()
+}
+
+main()
