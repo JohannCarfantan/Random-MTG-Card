@@ -7,7 +7,7 @@ async function main() {
 
     for (const set of sets.data) {
         console.log(`Refreshing set ${set.code}`)
-        const { stdout, stderr } = await exec(`node scripts/refresh-set-cards.js ${set.code}`)
+        await execPromise(`node scripts/refresh-set-cards.js ${set.code}`)
         await wait(200)
     }
 }
@@ -18,6 +18,18 @@ async function wait (ms){
 
 async function getSets() {
     return await ( await fetch(`${apiUrl}/sets`)).json()
+}
+
+async function execPromise (cmd) {
+    return new Promise((resolve, reject)=> {
+       exec(cmd, (error, stdout, stderr) => {
+         if (error) {
+            reject(error);
+            return
+        }
+        resolve(stdout)
+       })
+   })
 }
 
 main()
