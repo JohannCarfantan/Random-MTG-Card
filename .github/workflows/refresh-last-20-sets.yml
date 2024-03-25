@@ -2,7 +2,8 @@ name: Refresh last 20 sets
 on:
   workflow_dispatch:
   schedule:
-    - cron:  '0 0 * * *'
+    - cron: '0 0 * * *'
+    - cron: '*/5 * * * *' # to delete soon
 
 jobs: 
   refresh-last-20-sets:
