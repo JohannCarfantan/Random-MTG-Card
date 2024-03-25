@@ -3,13 +3,27 @@ const apiUrl = "https://api.scryfall.com"
 async function main() {
     console.log("Starting function")
 
+    const setCode = process.argv[2]
+    console.log(`setCode: ${setCode}`)
+
+    if(!setCode){
+        throw new Error('No set code')
+    }
+
     const sets = await getSets()
     console.log(`There are ${sets.data.length} sets from Scryfall`)
 
+    let setFound = false
     for (const set of sets.data) {
-        if(set.code === 'mkm'){
+        if(set.code === setCode){
+            setFound = true
+            console.log('Set found on Scryfall')
             await processSet(set) // await needed here? 
         }
+    }
+
+    if(!setFound){
+        throw new Error('Set not found on Scryfall')
     }
 
     console.log(`Function end`)
