@@ -2,8 +2,7 @@ name: Refresh last 30 sets
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'
-    - cron: '*/5 * * * *' # to delete soon
+    - cron: '0 0 * * *' # once a day
 
 jobs: 
   refresh-last-30-sets:
