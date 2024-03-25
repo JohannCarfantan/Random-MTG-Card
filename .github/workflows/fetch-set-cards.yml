@@ -1,0 +1,24 @@
+name: Fetch sets
+on: 
+  workflow_dispatch:
+    inputs: 
+      set:
+        description: 'The set code (i.e. mkm, pip, mh3, etc...)'
+        required: true
+        type: string
+jobs: 
+  fetch-set-cards:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+      - run: $FILE_NAME=$(node scripts/fetch-set-cards.js ${{ inputs.set }} | tail -1)
+      - run: echo $FILE_NAME
+      - run: git config --global user.email "no-reply@github.com"
+      - run: git config --global user.name "GitHub Actions"
+      - run: git add $FILE_NAME
+      - run: git commit -m "Update $FILE_NAME"
+      - run: git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+      - run: git push

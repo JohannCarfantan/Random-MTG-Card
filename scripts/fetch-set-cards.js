@@ -1,3 +1,4 @@
+const fs = require("fs")
 const apiUrl = "https://api.scryfall.com"
 
 async function main() {
@@ -25,8 +26,6 @@ async function main() {
     if(!setFound){
         throw new Error('Set not found on Scryfall')
     }
-
-    console.log(`Function end`)
 }
 
 async function getSets() {
@@ -61,11 +60,49 @@ async function processSet(set) {
     console.log(`There are ${frenchCards.length} french cards in the set`)
     let differences = cards.map(card => card.collector_number).filter(x => !frenchCards.map(card => card.collector_number).includes(x))
     console.log(`There are ${differences.length} cards that are not in french`)
-
-    // merge missing cards into the french cards array
+    // concat missing cards and french cards
     const missingCards = cards.filter(card => differences.includes(card.collector_number))
-    frenchCards.push(...missingCards)
-    console.log(`There are ${frenchCards.length} french cards in the set after adding missing cards`)
+    const setCards = frenchCards.concat(...missingCards)
+
+    console.log(`There are ${setCards.length} french cards in the set after adding missing cards`)
+
+    const setResultFile = {
+        c: [],
+        u: [],
+        r: [],
+        m: []
+    }
+    for(const card of setCards){
+        const image_uri = card.image_uris.normal ?? card.image_uri
+        const imageUrlSplitted = image_uri.split('https://cards.scryfall.io/normal/front/').pop().split('.jpg')[0]
+        switch(card.rarity){
+            case "common":
+                setResultFile.c.push(imageUrlSplitted)
+                break;
+            case "uncommon": 
+                setResultFile.u.push(imageUrlSplitted)
+                break;
+            case "rare": 
+                setResultFile.r.push(imageUrlSplitted)
+                break;
+            case "mythic": 
+            case "bonus": 
+            case "special": 
+                setResultFile.m.push(imageUrlSplitted)
+                break;
+            default:
+                console.log('Error: Unknown rarity for card', card)
+        }
+    }
+
+    if(setResultFile.c.length + setResultFile.u.length + setResultFile.r.length + setResultFile.m.length !== setCards.length){
+        throw new Error('Cards are missing')
+    }
+
+    const fileName = `sets/${set.code}.json`
+    fs.writeFileSync(fileName, JSON.stringify(setResultFile))
+    console.log(`Function end`)
+    console.log(fileName)
 }
 
 main()
