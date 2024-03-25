@@ -1,0 +1,23 @@
+name: Refresh last 20 sets
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 0 * * *'
+
+jobs: 
+  refresh-last-20-sets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+      - name: Fetch set cards and create a file for last 20 sets
+        run: |
+          node scripts/refresh-20-last-sets.js
+          git config --global user.email "no-reply@github.com"
+          git config --global user.name "GitHub Actions"
+          git add sets/*
+          git commit -m "Update sets"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push
