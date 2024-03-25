@@ -19,8 +19,7 @@ jobs:
           FILE_NAME=sets/${{ inputs.set }}.json
           echo $FILE_NAME
           touch $FILE_NAME
-          ls sets/
-          node scripts/refresh-set.js ${{ inputs.set }}
+          node scripts/refresh-set-cards.js ${{ inputs.set }}
           git config --global user.email "no-reply@github.com"
           git config --global user.name "GitHub Actions"
           git add $FILE_NAME
