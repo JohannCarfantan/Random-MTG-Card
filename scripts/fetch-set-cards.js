@@ -100,7 +100,7 @@ async function processSet(set) {
     }
 
     const fileName = `sets/${set.code}.json`
-    fs.writeFileSync(fileName, JSON.stringify(setResultFile), { flag: 'wx' })
+    fs.writeFileSync(fileName, JSON.stringify(setResultFile))
     console.log(`Function end`)
     console.log(fileName)
 }
