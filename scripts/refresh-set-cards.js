@@ -13,16 +13,11 @@ async function main() {
 
     const sets = await getSets()
     console.log(`There are ${sets.data.length} sets from Scryfall`)
-    fs.writeFileSync('sets/sets.json', JSON.stringify(sets.data.map(set => {
-        const temp = {}
-        temp[set.code] = set.name
-        return temp
-    }).reduce((acc, curr) => {
-        return {...acc, ...curr}
-    }, {})))
+    const setsWithCards = sets.data.filter(set => set.card_count > 0)
+    console.log(`There are ${setsWithCards.length} sets with cards`)
 
     let setFound = false
-    for (const set of sets.data) {
+    for (const set of setsWithCards) {
         if(set.code === setCode){
             setFound = true
             console.log('Set found on Scryfall')
@@ -106,10 +101,12 @@ async function processSet(set) {
         throw new Error('Cards are missing')
     }
 
-    const fileName = `sets/${set.code}.json`
-    fs.writeFileSync(fileName, JSON.stringify(setResultFile))
-    console.log(`Function end`)
-    console.log(fileName)
+    if(setResultFile.c.length + setResultFile.u.length + setResultFile.r.length + setResultFile.m.length > 0){
+        const fileName = `sets/${set.code}.json`
+        fs.writeFileSync(fileName, JSON.stringify(setResultFile))
+        console.log(`Function end`)
+        console.log(fileName)
+    }
 }
 
 main()

@@ -1,10 +1,13 @@
 const { exec } = require('child_process')
+const fs = require('fs')
 const apiUrl = "https://api.scryfall.com"
 
 async function main() {
     const sets = await getSets()
     console.log(`There are ${sets.data.length} sets from Scryfall`)
-    fs.writeFileSync('sets/sets.json', JSON.stringify(sets.data.map(set => {
+    const setsWithCards = sets.data.filter(set => set.card_count > 0)
+    console.log(`There are ${setsWithCards.length} sets with cards`)
+    fs.writeFileSync('sets/sets.json', JSON.stringify(setsWithCards.map(set => {
         const temp = {}
         temp[set.code] = set.name
         return temp
@@ -12,9 +15,11 @@ async function main() {
         return {...acc, ...curr}
     }, {})))
 
-    for (const set of sets.data) {
-        console.log(`Refreshing set ${set.code}`)
-        await execPromise(`node scripts/refresh-set-cards.js ${set.code}`)
+    let cpt = 1
+    for (const set of setsWithCards) {
+        console.log(`Refreshing set ${set.code} (${cpt}/${setsWithCards.length})`)
+        await exec(`node scripts/refresh-set-cards.js ${set.code}`)
+        cpt ++
         await wait(200)
     }
 }
@@ -25,18 +30,6 @@ async function wait (ms){
 
 async function getSets() {
     return await ( await fetch(`${apiUrl}/sets`)).json()
-}
-
-async function execPromise (cmd) {
-    return new Promise((resolve, reject)=> {
-       exec(cmd, (error, stdout, stderr) => {
-         if (error) {
-            reject(error);
-            return
-        }
-        resolve(stdout)
-       })
-   })
 }
 
 main()
