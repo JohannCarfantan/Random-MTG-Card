@@ -5,7 +5,7 @@ async function main() {
     const sets = await getSets()
     console.log(`There are ${sets.data.length} sets from Scryfall`)
 
-    for (const set of sets.data.slice(0, 20)) {
+    for (const set of sets.data.slice(0, 30)) {
         console.log(`Refreshing set ${set.code}`)
         await execPromise(`node scripts/refresh-set-cards.js ${set.code}`)
         await wait(200)

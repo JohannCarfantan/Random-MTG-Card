@@ -1,4 +1,4 @@
-name: Refresh last 20 sets
+name: Refresh last 30 sets
 on:
   workflow_dispatch:
   schedule:
@@ -6,16 +6,16 @@ on:
     - cron: '*/5 * * * *' # to delete soon
 
 jobs: 
-  refresh-last-20-sets:
+  refresh-last-30-sets:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-      - name: Fetch set cards and create a file for last 20 sets
+      - name: Fetch set cards and create a file for last 30 sets
         run: |
-          node scripts/refresh-20-last-sets.js
+          node scripts/refresh-30-last-sets.js
           git config --global user.email "no-reply@github.com"
           git config --global user.name "GitHub Actions"
           git add sets/*
