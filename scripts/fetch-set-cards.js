@@ -73,7 +73,7 @@ async function processSet(set) {
         m: []
     }
     for(const card of setCards){
-        const image_uri = card.image_uris?.normal ?? card.image_uri
+        const image_uri = card.image_uris ? card.image_uris.normal : card.card_faces.length > 0 ? card.card_faces[0].image_uris.normal : card.image_uri
         const imageUrlSplitted = image_uri.split('https://cards.scryfall.io/normal/front/').pop().split('.jpg')[0]
         switch(card.rarity){
             case "common":
