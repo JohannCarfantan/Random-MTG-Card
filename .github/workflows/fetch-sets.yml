@@ -1,10 +1,11 @@
 name: Fetch sets
-on: workflow_dispatch
-  inputs: 
-    set:
-      description: 'The set code (i.e. mkm, pip, mh3, etc...)'
-      required: true
-      type: string
+on: 
+  workflow_dispatch:
+    inputs: 
+      set:
+        description: 'The set code (i.e. mkm, pip, mh3, etc...)'
+        required: true
+        type: string
 jobs: 
   fetch-sets:
     runs-on: ubuntu-latest
