@@ -16,10 +16,11 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Fetch set cards and create file
         run: |
-          touch sets/${{ inputs.set }}.json
-          ls sets/
-          $FILE_NAME=$(node scripts/fetch-set-cards.js ${{ inputs.set }} | tail -1)
+          FILE_NAME=sets/${{ inputs.set }}.json
           echo $FILE_NAME
+          touch $FILE_NAME
+          ls sets/
+          node scripts/fetch-set-cards.js ${{ inputs.set }}
           git config --global user.email "no-reply@github.com"
           git config --global user.name "GitHub Actions"
           git add $FILE_NAME
