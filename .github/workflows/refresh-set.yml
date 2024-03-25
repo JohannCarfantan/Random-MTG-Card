@@ -7,7 +7,7 @@ on:
         required: true
         type: string
 jobs: 
-  fetch-set-cards:
+  refresh-set:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,7 +20,7 @@ jobs:
           echo $FILE_NAME
           touch $FILE_NAME
           ls sets/
-          node scripts/fetch-set-cards.js ${{ inputs.set }}
+          node scripts/refresh-set.js ${{ inputs.set }}
           git config --global user.email "no-reply@github.com"
           git config --global user.name "GitHub Actions"
           git add $FILE_NAME
