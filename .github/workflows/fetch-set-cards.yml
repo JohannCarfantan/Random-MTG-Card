@@ -15,6 +15,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
       - run: touch sets/${{ inputs.set }}.json
+      - run: ls sets/
       - run: $FILE_NAME=$(node scripts/fetch-set-cards.js ${{ inputs.set }} | tail -1)
       - run: echo $FILE_NAME
       - run: git config --global user.email "no-reply@github.com"
