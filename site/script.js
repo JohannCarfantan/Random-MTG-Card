@@ -8,7 +8,7 @@ let set = []
 let setFiltered = []
 
 async function loadSet(){
-    set = await loadFile(`set_${setSelect.value}`, true)
+    set = await loadFileFromSetsFolder(setSelect.value)
     setTitle.innerHTML = sets[setSelect.value]
     setCardsNumber.innerHTML = set.c.length + set.u.length + set.r.length + set.m.length + " cartes"
     sessionStorage.setItem("selectedSetAcronym", setSelect.value)
@@ -34,8 +34,8 @@ function displayARandomCardFromFilteredSet() {
     cardPreview.src = 'https://cards.scryfall.io/normal/front/' + setFiltered[randomNumber] + '.jpg'
 }
 
-async function loadFile(name, isASet = false) {
-    return new Promise(resolve => {
+async function loadFileFromSetsFolder(name) {
+    return new Promise(async resolve => {
         // Check if already loaded
         if(typeof window[name] !== 'undefined'){
             return resolve(window[name]) 
@@ -49,13 +49,11 @@ async function loadFile(name, isASet = false) {
         }
 
         // Load file from url
-        const script = document.createElement('script')
-        script.onload = function () {
-            sessionStorage.setItem(name, JSON.stringify(window[name]))
-            return resolve(window[name])
-        }
-        script.src = isASet ? `./sets/${name}.js` : `./${name}.js`
-        document.body.appendChild(script)
+        let response = await fetch(`https://raw.githubusercontent.com/JohannCarfantan/Random-MTG-Card/master/sets/${name}.json`)
+        const setLoaded = await response.json()
+        sessionStorage.setItem(name, JSON.stringify(setLoaded))
+        window[name] = setLoaded
+        return resolve(setLoaded)
     })
 }
 
@@ -89,7 +87,7 @@ async function loadSelectedSetAndDisplayACard(){
 }
 
 async function main() {
-    await loadFile('sets')
+    await loadFileFromSetsFolder('sets')
     displaySetsInSelect()
     setSelectedSetAndRaritiesFromSessionStorage()
     loadSelectedSetAndDisplayACard()
