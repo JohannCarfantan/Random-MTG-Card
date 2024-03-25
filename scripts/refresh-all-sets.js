@@ -4,6 +4,13 @@ const apiUrl = "https://api.scryfall.com"
 async function main() {
     const sets = await getSets()
     console.log(`There are ${sets.data.length} sets from Scryfall`)
+    fs.writeFileSync('sets/sets.json', JSON.stringify(sets.data.map(set => {
+        const temp = {}
+        temp[set.code] = set.name
+        return temp
+    }).reduce((acc, curr) => {
+        return {...acc, ...curr}
+    }, {})))
 
     for (const set of sets.data) {
         console.log(`Refreshing set ${set.code}`)
