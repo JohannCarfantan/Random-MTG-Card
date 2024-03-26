@@ -15,6 +15,13 @@ async function main() {
     console.log(`There are ${sets.data.length} sets from Scryfall`)
     const setsWithCards = sets.data.filter(set => set.card_count > 0)
     console.log(`There are ${setsWithCards.length} sets with cards`)
+    fs.writeFileSync('sets/sets.json', JSON.stringify(setsWithCards.map(set => {
+        const temp = {}
+        temp[set.code] = set.name
+        return temp
+    }).reduce((acc, curr) => {
+        return {...acc, ...curr}
+    }, {})))
 
     let setFound = false
     for (const set of setsWithCards) {
